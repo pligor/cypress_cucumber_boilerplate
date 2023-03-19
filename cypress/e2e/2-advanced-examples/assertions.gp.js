@@ -123,7 +123,6 @@ context("Assertions", () => {
           ).to.have.attr("placeholder", "Username");
         });
     });
-    */
 
     it('can throw any error', () => {
       cy.contains("Sample Pages").parents(".card").find(".btn").click();
@@ -144,34 +143,43 @@ context("Assertions", () => {
           }
         })
     })
-/*
-    it('matches unknown text between two elements', () => {
+    */
+
+    it("matches unknown text between two elements", () => {
+      cy.contains("Sample Pages").parents(".card").find(".btn").click();
+
       //  * Text from the first element.
       //  * @type {string}
-      let text
+      let text;
 
       //  * Normalizes passed text,
       //  * useful before comparing text with spaces and different capitalization.
       //  * @param {string} s Text to normalize
-      const normalizeText = (s) => s.replace(/\s/g, '').toLowerCase()
+      const normalizeText = (ss) => ss.replace(/\s/g, "").toLowerCase();
 
-      cy.get('.two-elements')
-        .find('.first')
-        .then(($first) => {
+      cy.get("form", { timeout: 1000 })
+        .find("input")
+        .first()
+        .type("    admin    ")
+        .then(($input) => {
           // save text from the first element
-          text = normalizeText($first.text())
-        })
+          text = normalizeText($input.val());
+        });
 
-      cy.get('.two-elements')
-        .find('.second')
-        .should(($div) => {
+      console.log("text: ", text);
+
+      cy.get("form", { timeout: 1000 })
+        .find("input")
+        .eq(1)
+        .type("ADMIN")
+        .should(($input) => {
           // we can massage text before comparing
-          const secondText = normalizeText($div.text())
+          const secondText = normalizeText($input.val());
+          expect(secondText, "second text custom error message").to.equal(text);
+        });
+    });
 
-          expect(secondText, 'second text').to.equal(text)
-        })
-    })
-
+    /*
     it('assert - assert shape of an object', () => {
       const person = {
         name: 'Joe',
