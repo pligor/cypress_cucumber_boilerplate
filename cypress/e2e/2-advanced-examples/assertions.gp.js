@@ -5,7 +5,6 @@ context("Assertions", () => {
     cy.visit("https://play1.automationcamp.ir/index.html");
   });
 
-  /*
   describe("Implicit Assertions", () => {
     it(".should() - make an assertion about the current subject", () => {
       cy.contains("Forms").parents(".card").find(".btn").click();
@@ -44,10 +43,8 @@ context("Assertions", () => {
         .and("match", "button");
     });
   });
-  */
 
   describe("Explicit Assertions", () => {
-    /*
     // https://on.cypress.io/assertions
     it("expect - make an assertion about a specified subject", () => {
       // We can use Chai's BDD style assertions
@@ -143,7 +140,6 @@ context("Assertions", () => {
           }
         })
     })
-    */
 
     it("matches unknown text between two elements", () => {
       cy.contains("Sample Pages").parents(".card").find(".btn").click();
@@ -179,24 +175,29 @@ context("Assertions", () => {
         });
     });
 
-    /*
-    it('assert - assert shape of an object', () => {
+    it("assert - assert type of an object", () => {
       const person = {
-        name: 'Joe',
+        name: "Joe",
         age: 20,
-      }
+      };
 
-      assert.isObject(person, 'value is object')
-    })
+      assert.isObject(person, "value is object");
+    });
 
-    it('retries the should callback until assertions pass', () => {
-      cy.get('#random-number')
-        .should(($div) => {
-          const n = parseFloat($div.text())
+    it("retries the should callback until assertions pass", () => {
+      cy.contains("Wait Conditions").parents(".card").find(".btn").click();
 
-          expect(n).to.be.gte(1).and.be.lte(10)
-        })
-    })
-    */
+      let max_wait;
+
+      cy.get("input#max_wait").then(($elem) => {
+        max_wait = parseFloat($elem.val());
+      });
+
+      cy.get("input#min_wait").should(($elem) => {
+        const num = parseFloat($elem.val());
+
+        expect(num).to.be.gte(0).and.be.lte(max_wait);
+      });
+    });
   });
 });
