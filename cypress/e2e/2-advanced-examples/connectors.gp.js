@@ -38,30 +38,37 @@ context("Connectors", () => {
     cy.get("button#visibility_target").should("be.visible");
   });
 
-  /*
-  it('.spread() - spread an array as individual args to callback function', () => {
+  it(".spread() - spread an array as individual args to callback function", () => {
     // https://on.cypress.io/spread
-    const arr = ['foo', 'bar', 'baz']
+    const arr = ["uno", "duo", "tre"];
 
     cy.wrap(arr).spread((foo, bar, baz) => {
-      expect(foo).to.eq('foo')
-      expect(bar).to.eq('bar')
-      expect(baz).to.eq('baz')
-    })
-  })
+      expect(foo).to.eq("uno");
+      expect(bar).to.eq("duo");
+      expect(baz).to.eq("tre");
+      expect([foo, bar, baz]).to.deep.eq(["uno", "duo", "tre"]);
+    });
+  });
 
-  describe('.then()', () => {
-    it('invokes a callback function with the current subject', () => {
+  describe(".then()", () => {
+    it("invokes a callback function with the current subject", () => {
+      cy.visit("https://play1.automationcamp.ir/order_submit.html");
+
       // https://on.cypress.io/then
-      cy.get('.connectors-list > li')
-        .then(($lis) => {
-          expect($lis, '3 items').to.have.length(3)
-          expect($lis.eq(0), 'first item').to.contain('Walk the dog')
-          expect($lis.eq(1), 'second item').to.contain('Feed the cat')
-          expect($lis.eq(2), 'third item').to.contain('Write JavaScript')
-        })
-    })
+      cy.get("input[type=checkbox]", { timeout: 10000 })
+        .siblings("label")
+        .then(($elems) => {
+          expect(
+            $elems,
+            "3 items are expected and this is a custom error message"
+          ).to.have.length(3);
 
+          expect($elems.eq(0), "first item").to.contain("Onions");
+          expect($elems.eq(1), "second item").to.contain("Green Olive");
+          expect($elems.eq(2), "third item").to.contain("Tomatoes");
+        });
+    });
+    /*
     it('yields the returned value to the next command', () => {
       cy.wrap(1)
         .then((num) => {
@@ -100,6 +107,6 @@ context("Connectors", () => {
           expect(num).to.equal(2)
         })
     })
-  })
-  */
+    */
+  });
 });
