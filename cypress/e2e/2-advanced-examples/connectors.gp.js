@@ -68,45 +68,45 @@ context("Connectors", () => {
           expect($elems.eq(2), "third item").to.contain("Tomatoes");
         });
     });
-    /*
-    it('yields the returned value to the next command', () => {
-      cy.wrap(1)
-        .then((num) => {
-          expect(num).to.equal(1)
 
-          return 2
+    it("yields the returned value to the next command", () => {
+      cy.wrap(10)
+        .then((num) => {
+          expect(num).to.equal(10);
+
+          return 0.5;
         })
         .then((num) => {
-          expect(num).to.equal(2)
-        })
-    })
+          expect(num).to.equal(0.5);
+        });
+    });
 
-    it('yields the original subject without return', () => {
-      cy.wrap(1)
+    it("yields the original subject without return", () => {
+      cy.wrap(0.001)
         .then((num) => {
-          expect(num).to.equal(1)
+          expect(num).to.equal(0.001);
           // note that nothing is returned from this callback
         })
         .then((num) => {
           // this callback receives the original unchanged value 1
-          expect(num).to.equal(1)
-        })
-    })
+          expect(num).to.equal(0.001);
+          expect(num).not.to.equal(1);
+        });
+    });
 
-    it('yields the value yielded by the last Cypress command inside', () => {
+    it("yields the value yielded by the last Cypress command inside", () => {
       cy.wrap(1)
         .then((num) => {
-          expect(num).to.equal(1)
+          expect(num).to.equal(1);
           // note how we run a Cypress command
           // the result yielded by this Cypress command
           // will be passed to the second ".then"
-          cy.wrap(2)
+          cy.wrap(2);
         })
         .then((num) => {
           // this callback receives the value yielded by "cy.wrap(2)"
-          expect(num).to.equal(2)
-        })
-    })
-    */
+          expect(num).to.equal(2);
+        });
+    });
   });
 });
