@@ -39,6 +39,7 @@ context("Cookies", () => {
     );
   });
 
+  //  ONLY FOR THE CURRENT DOMAIN
   it("cy.getCookies() - get browser cookies for the current domain", () => {
     // https://on.cypress.io/getcookies
     cy.getCookies().should("be.empty");
@@ -64,33 +65,48 @@ context("Cookies", () => {
         expect(cookies[1]).to.have.property("value").that.contains("v1");
       });
   });
-  /*
-  it('cy.getAllCookies() - get all browser cookies', () => {
-    // https://on.cypress.io/getallcookies
-    cy.getAllCookies().should('be.empty')
 
-    cy.setCookie('key', 'value')
-    cy.setCookie('key', 'value', { domain: '.example.com' })
+  // FOR DOMAIN AND ALL SUBDOMAINS
+  it("cy.getAllCookies() - get all browser cookies", () => {
+    cy.visit("https://www.mcspotlight.org/index.shtml");
+    cy.get('img[src*=head]').should("be.visible");
+    
+    cy.clearCookies();
+
+    // https://on.cypress.io/getallcookies
+    cy.getAllCookies().should("be.empty");
+
+    //no collission
+    cy.setCookie("samekey", "main domain");
+    cy.setCookie("samekey", "another domain", {
+      domain: "mysubdomain.example.com",
+    });
 
     // cy.getAllCookies() yields an array of cookies
-    cy.getAllCookies().should('have.length', 2).should((cookies) => {
-      // each cookie has these properties
-      expect(cookies[0]).to.have.property('name', 'key')
-      expect(cookies[0]).to.have.property('value', 'value')
-      expect(cookies[0]).to.have.property('httpOnly', false)
-      expect(cookies[0]).to.have.property('secure', false)
-      expect(cookies[0]).to.have.property('domain')
-      expect(cookies[0]).to.have.property('path')
+    cy.getAllCookies()
+      .should("have.length", 2)
+      .should((cookies) => {
+        // each cookie has these properties
+        expect(cookies[0]).to.have.property("name", "samekey");
+        expect(cookies[0]).to.have.property("value", "main domain");
+        expect(cookies[0]).to.have.property("httpOnly", false);
+        expect(cookies[0]).to.have.property("secure", false);
+        expect(cookies[0]).to.have.property("domain");
+        expect(cookies[0]).to.have.property("path");
 
-      expect(cookies[1]).to.have.property('name', 'key')
-      expect(cookies[1]).to.have.property('value', 'value')
-      expect(cookies[1]).to.have.property('httpOnly', false)
-      expect(cookies[1]).to.have.property('secure', false)
-      expect(cookies[1]).to.have.property('domain', '.example.com')
-      expect(cookies[1]).to.have.property('path')
-    })
-  })
+        expect(cookies[1]).to.have.property("name", "samekey");
+        expect(cookies[1]).to.have.property("value", "another domain");
+        expect(cookies[1]).to.have.property("httpOnly").to.be.false;
+        expect(cookies[1]).to.have.property("secure", false);
+        expect(cookies[1]).to.have.property(
+          "domain",
+          ".mysubdomain.example.com"
+        );
+        expect(cookies[1]).to.have.property("path");
+      });
+  });
 
+  /*
   it('cy.setCookie() - set a browser cookie', () => {
     // https://on.cypress.io/setcookie
     cy.getCookies().should('be.empty')
