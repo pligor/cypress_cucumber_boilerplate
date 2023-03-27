@@ -12,11 +12,12 @@ context("Cookies", () => {
   });
 
   it("cy.getCookie() - get a browser cookie", () => {
-    // cy.getCookie("euconsent-v2").should("have.property", "Value", "");
-
     cy.getCookie("euconsent-v2", { timeout: 10000 }).should("be.null");
 
+    // cy.getCookie("euconsent-v2", { timeout: 10000 }).should("not.be.null"); //TODO it seems that Cypress is not retrying here as one would expect and this is also true for getCookies
+
     // https://on.cypress.io/getcookie
+
     cy.xpath("//*[text()='Accept']").should("be.visible").click();
 
     // cy.getCookie() yields a cookie object
@@ -38,25 +39,32 @@ context("Cookies", () => {
     );
   });
 
-  /*
-  it('cy.getCookies() - get browser cookies for the current domain', () => {
+  it("cy.getCookies() - get browser cookies for the current domain", () => {
     // https://on.cypress.io/getcookies
-    cy.getCookies().should('be.empty')
+    cy.getCookies().should("be.empty");
 
-    cy.get('#getCookies .set-a-cookie').click()
+    cy.xpath("//*[text()='Accept']").should("be.visible").click();
 
     // cy.getCookies() yields an array of cookies
-    cy.getCookies().should('have.length', 1).should((cookies) => {
-      // each cookie has these properties
-      expect(cookies[0]).to.have.property('name', 'token')
-      expect(cookies[0]).to.have.property('value', '123ABC')
-      expect(cookies[0]).to.have.property('httpOnly', false)
-      expect(cookies[0]).to.have.property('secure', false)
-      expect(cookies[0]).to.have.property('domain')
-      expect(cookies[0]).to.have.property('path')
-    })
-  })
 
+    cy.getCookies()
+      .should("have.lengthOf.gte", 2) //TODO here if you wait long enough this could be 16
+      .should((cookies) => {
+        // each cookie has these properties
+        expect(cookies[0]).to.have.property("name", "euconsent-v2");
+        expect(cookies[0]).to.have.property("value").not.be.empty;
+        expect(cookies[0]).to.have.property("httpOnly", false);
+        expect(cookies[0]).to.have.property("secure", false);
+        expect(cookies[0]).to.have.property("domain");
+        expect(cookies[0]).to.have.property("path");
+
+        expect(cookies[1])
+          .to.have.property("name")
+          .that.contains("cmp_version");
+        expect(cookies[1]).to.have.property("value").that.contains("v1");
+      });
+  });
+  /*
   it('cy.getAllCookies() - get all browser cookies', () => {
     // https://on.cypress.io/getallcookies
     cy.getAllCookies().should('be.empty')
