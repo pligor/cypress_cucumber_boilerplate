@@ -51,4 +51,10 @@ context("Aliasing", () => {
     // // https://on.cypress.io/wait
     cy.wait("@getAjax").its("response.statusCode").should("eq", 200);
   });
+
+  it("to save any cypress variable", () => {
+    cy.wrap('egrapsa oti ithela, kai opoio object na nai').as('kati');
+
+    cy.log("@kati");
+  });
 });

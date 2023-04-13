@@ -88,3 +88,6 @@ Sample of executing a feature file Cucumber: `npx cypress run --spec=features/sa
 
 # Extra links
 - https://docs.cypress.io/guides/core-concepts/writing-and-organizing-tests#Support-file
+
+# Command to see if project is cooking ok
+npx cypress run --spec "cypress/e2e/1-getting-started/todo.gp.js" --headed
