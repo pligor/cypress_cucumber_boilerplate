@@ -1,7 +1,7 @@
 # Execution
 ### To execute by specifying the tag for a scenario in cucumber
 
-    npx cypress run --headed --no-exit --browser chrome --spec=features/saphetor.feature -e TAGS="@helloworld or @exercise"
+    npx cypress run --browser chrome --spec=features/saphetor.feature -e TAGS="@helloworld or @wip" --headed --no-exit
 
 Note that the tags need to include the "@" character
 
