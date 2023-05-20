@@ -16,6 +16,7 @@
     "@cypress/xpath": "^2.0.3",
     "chai": "^4.3.7",
     "cypress": "^12.7.0",
+    "multiple-cucumber-html-reporter": "^3.4.0",
     "node-modules-polyfill": "^0.1.4"
   },
   "cypress-cucumber-preprocessor": {
