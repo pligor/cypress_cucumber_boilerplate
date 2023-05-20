@@ -1,6 +1,21 @@
 name: Execution of Cypress Cucumber Boilerplate Scenarios
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      browser:
+        description: 'Browser'     
+        required: true
+        default: 'chrome'
+      spec:
+        description: 'Specs (sub)folder or file to be included in the execution'
+        required: true
+        default: 'features/saphetor.feature'
+      tags:
+        description: 'Tags to be included'
+        required: true
+        default: 'not @exercise'
+  # schedule:
+    # - cron:  '0 1 * * 1-5' # Runs every day on 1:00AM UTC (4:00AM Athens) only on Weekdays
 jobs:
   build:
    runs-on: ubuntu-latest
@@ -21,7 +36,7 @@ jobs:
      run: npm install
 
    - name: Execute scenarios
-     run: npx cypress run --browser chrome --spec=features/saphetor.feature -e TAGS="not @exercise" --headless
+     run: npx cypress run --browser "${{ github.event.inputs.browser }}" --spec "${{ github.event.inputs.spec }}" -e TAGS="${{ github.event.inputs.tags }}" --headless
 
    - name: Generate the report
      run: node cucumber-html-report.js
