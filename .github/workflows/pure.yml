@@ -1,0 +1,34 @@
+name: Execution of Cypress Cucumber Boilerplate Scenarios
+on:
+  workflow_dispatch: {}
+jobs:
+  build:
+   runs-on: ubuntu-latest
+   steps:
+   - uses: actions/checkout@v3 # Checking out the branch we want to run the suite with
+     with:
+      repository: gpepignosis/cypress_cucumber_boilerplate
+      ref: main
+      token: ${{ secrets.GITHUB_TOKEN }}
+
+   - name: Setup Node.js environment
+     uses: actions/setup-node@v2
+     with:
+       node-version: '18'
+
+   - name: Install Node Packages
+     run: npm install
+
+   - name: Execute scenarios
+     run: npx cypress run --browser chrome --spec=features/saphetor.feature -e TAGS="not @exercise" --headless
+
+   - name: Generate the report
+     run: node cucumber-html-report.js
+
+  # Save the HTML reports folder as an artifact for future inspection
+   - name: Save reports folder
+     uses: actions/upload-artifact@v3
+     with:
+       name: reports
+       if-no-files-found: error
+       path: reports/html
