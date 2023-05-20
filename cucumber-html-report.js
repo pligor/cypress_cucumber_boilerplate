@@ -4,7 +4,7 @@ report.generate({
     jsonDir: "reports/json/",
     reportPath: "./reports/html/multiple-html-report/",
     displayReportTime: true,
-    openReportInBrowser: true,
+    openReportInBrowser: false,
     displayDuration: true,
     metadata: {
         browser: {
