@@ -11,11 +11,12 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@badeball/cypress-cucumber-preprocessor": "^15.1.5",
+    "@badeball/cypress-cucumber-preprocessor": "^16.0.3",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.1.5",
     "@cypress/xpath": "^2.0.3",
     "chai": "^4.3.7",
-    "cypress": "^12.7.0"
+    "cypress": "^12.7.0",
+    "node-modules-polyfill": "^0.1.4"
   },
   "cypress-cucumber-preprocessor": {
     "stepDefinitions": [
