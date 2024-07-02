@@ -143,7 +143,7 @@ describe("example to-do app", () => {
         .click();
 
       //we start with all the checkboxes unchecked
-      cy.get(".form-check.form-check-inline input[type=checkbox]").check();
+      cy.get(".form-check.form-check-inline input[type=checkbox]").check({force: true}); //because java is disabled
     });
 
     it("the check validate should not contain python", () => {
@@ -165,7 +165,7 @@ describe("example to-do app", () => {
     });
 
     it("the check validate should contain nothing if all are unchecked", () => {
-      cy.get(".form-check.form-check-inline input[type=checkbox]").uncheck();
+      cy.get(".form-check.form-check-inline input[type=checkbox]").uncheck({force: true}); //because java is disabled
 
       cy.get("#check_validate").should("exist").should("have.text", "");
     });
